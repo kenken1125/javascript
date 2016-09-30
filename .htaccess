@@ -1,0 +1,39 @@
+# 文字コードをUTF-8に設定
+php_value output_buffering OFF
+php_value default_charset UTF-8
+php_value mbstring.detect_order SJIS,EUC-JP,JIS,UTF-8,ASCII
+php_value mbstring.http_input pass
+php_value mbstring.http_output pass
+php_value mbstring.internal_encoding UTF-8
+php_value mbstring.substitute_character none
+php_value mbstring.encoding_translation OFF
+
+# アクセスした際の拡張子を消す .html なしでもアクセス可能にする
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.*)$ $1.html
+# Replace html with your file extension, eg: php, htm, asp
+
+# カスタムエラードキュメント
+ErrorDocument 401 /404.html
+ErrorDocument 403 /404.html
+ErrorDocument 404 /404.html
+ErrorDocument 500 /404.html
+
+# スマホサイトへ転送
+# RewriteEngine On
+# RewriteCond %{HTTP_USER_AGENT} (iPhone|Android.*Mobile|Windows.*Phone) [NC]
+# RewriteCond %{QUERY_STRING} !mode=pc
+# RewriteRule ^$ /sp/ [R,L]
+
+# index制御
+# RewriteEngine on
+# RewriteCond %{THE_REQUEST} ^.*/index.html
+# RewriteRule ^(.*)index.html$ http://example.com/$1 [R=301,L]
+
+# www制御
+# Options +FollowSymLinks
+# RewriteEngine on
+# RewriteCond %{HTTP_HOST} ^example.com
+# RewriteRule ^(.*)$ http://www.example.com/$1 [R=301,L]
